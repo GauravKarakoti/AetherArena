@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "rust-orchestrator",
+]
+
+[workspace.dependencies]
+linera-sdk = "0.15.3"
+serde = { version = "1.0", features = ["derive"] }
+async-graphql = { version = "6.0", features = ["uuid", "chrono"] }

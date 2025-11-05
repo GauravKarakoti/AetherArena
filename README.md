@@ -16,7 +16,7 @@ AetherArena is a next-generation prediction platform built on the Linera blockch
 
 The project consists of three main components:
 
-1.  **Linera Application (`/linera-app`):** The core on-chain logic, managing Arenas, predictions, and user balances on dedicated microchains.
+1.  **Linera Application (`/linera`):** The core on-chain logic, managing Arenas, predictions, and user balances on dedicated microchains.
 2.  **Rust Arena Orchestrator (`/rust-orchestrator`):** An external service that fetches live data, runs AI models, and interacts with the Linera blockchain as an AI agent.
 3.  **React Frontend (`/frontend`):** A web interface that connects to the Linera network via GraphQL to provide a real-time user experience.
 
@@ -56,8 +56,8 @@ cp .env.example .env
 # Run the service
 cargo run
 # Or run with Docker:
-docker build -t aetherarena-orchestrator .
-docker run --env-file .env aetherarena-orchestrator
+docker build -t rust-orchestrator .
+docker run --env-file .env rust-orchestrator
 ```
 
 ### 3. React Frontend

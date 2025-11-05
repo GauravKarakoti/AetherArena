@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  orchestrator:
+    build: ./rust-orchestrator
+    ports:
+      - "8081:8081"
+    environment:
+      - RUST_LOG=info
+    volumes:
+      - ./rust-orchestrator/config.yaml:/app/config.yaml
+    depends_on:
+      - linera-node
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_LINERA_GRAPHQL_URL=http://localhost:8080/graphql
+    depends_on:
+      - linera-node
+
+  # This would be your local Linera development node
+  linera-node:
+    image: linera-base:latest
+    ports:
+      - "8080:8080"
+    command: ["linera", "server"]
