@@ -1,11 +1,12 @@
 import React from 'react';
-import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql, useMutation } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql, useMutation, useSubscription } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import type { Arena } from './types';
 import { ArenaStatus } from './types';
+import './App.css'
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:8080/ws',
+  uri: 'ws://localhost:8080/graphql',
   options: {
     reconnect: true,
   },
@@ -51,23 +52,23 @@ const PLACE_PREDICTION = gql`
   }
 `;
 
-// Components
 const ArenaList: React.FC = () => {
-  const { loading, error, data } = useQuery(GET_ARENAS, {
-    variables: { statusFilter: null }
-  });
+  // Change this line
+  const { loading, error, data } = useSubscription(GET_ARENAS, { // <-- Use useSubscription here
+    variables: { statusFilter: null }
+  });
 
-  if (loading) return <div className="loading">Loading arenas...</div>;
-  if (error) return <div className="error">Error: {error.message}</div>;
+  if (loading) return <div className="loading">Loading arenas...</div>;
+  if (error) return <div className="error">Error: {error.message}</div>;
 
-  return (
-    <div className="arena-list">
-      <h2>Active Arenas</h2>
-      {data?.arenas?.map((arena: Arena) => (
-        <ArenaCard key={arena.id} arena={arena} />
-      ))}
-    </div>
-  );
+  return (
+    <div className="arena-list">
+      <h2>Active Arenas</h2>
+      {data?.arenas?.map((arena: Arena) => (
+        <ArenaCard key={arena.id} arena={arena} />
+      ))}
+  M</div>
+  );
 };
 
 const ArenaCard: React.FC<{ arena: Arena }> = ({ arena }) => {
